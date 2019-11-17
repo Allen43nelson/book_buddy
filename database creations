@@ -1,0 +1,45 @@
+use book_buddy;
+
+user table creation:
+
+CREATE TABLE users (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    uid VARCHAR(45) NOT NULL UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+book details creation :
+
+CREATE TABLE `book_buddy`.`book_details` (
+	`add_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
+  `user_id` INT(10) NOT NULL,
+  `book_name` VARCHAR(45) NOT NULL,
+  `author_name` VARCHAR(45) NOT NULL,
+  `branch` VARCHAR(45) NOT NULL,
+  `semester` VARCHAR(10) NOT NULL,
+  `price` INT(10) NOT NULL,
+  `message` VARCHAR(45) NOT NULL,
+  
+  CONSTRAINT `userid`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `book_buddy`.`users` (`id`)
+    );
+    
+    book image table creation :
+    
+      CREATE TABLE `book_buddy`.`images` (
+  `image_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
+  `add_id` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  `image` LONGBLOB NOT NULL,
+  `created` datetime NOT NULL,
+  CONSTRAINT `add_id`
+    FOREIGN KEY (`add_id`)
+    REFERENCES `book_buddy`.`book_details` (`add_id`)
+    ,
+  CONSTRAINT `user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `book_buddy`.`users` (`id`)
+  );
