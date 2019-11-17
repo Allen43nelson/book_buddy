@@ -21,11 +21,14 @@ CREATE TABLE `book_buddy`.`book_details` (
   `semester` VARCHAR(10) NOT NULL,
   `price` INT(10) NOT NULL,
   `message` VARCHAR(45) NOT NULL,
-  
+  `image` LONGBLOB ,
+  `created` DATETIME DEFAULT CURRENT_TIMESTAMP,
+
   CONSTRAINT `userid`
     FOREIGN KEY (`user_id`)
     REFERENCES `book_buddy`.`users` (`id`)
     );
+
     
     book image table creation :
     
