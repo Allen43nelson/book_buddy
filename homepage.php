@@ -14,6 +14,25 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
+* {
+              box-sizing: border-box;
+            }
+
+            /* Create two equal columns that floats next to each other */
+            .column {
+              float: left;
+              width: 25%;
+              padding: 10px;
+            }
+
+            /* Clear floats after the columns */
+            .row:after {
+              content: "";
+              display: table;
+              clear: both;
+            }
+            /* Style the buttons */
+        
 
 .topnav {
   overflow: hidden;
@@ -72,7 +91,7 @@ body {
       background-color: white
   }
   
-}
+  }
 </style>
 </head>
 <body>
