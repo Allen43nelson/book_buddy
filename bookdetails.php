@@ -70,11 +70,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($book_name_err) && empty($price_err) && empty($branch_name_err) && empty($sem_err) && empty($author_name_err) && empty($msg_err) ){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO book_details (user_id , book_name,author_name, branch , semester ,  price , message) VALUES (? , ?, ? , ?, ? , ?, ?)";
+        $destination_url = 'photo'.$_SESSION["id"].'.jpeg'; 
+        $imgContent = addslashes(file_get_contents($destination_url));
+        $sql = "INSERT INTO book_details (user_id , book_name,author_name, branch , semester ,  price , message , image) VALUES (? , ?, ? , ?, ? , ?, ?,?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssssss",$param_id , $param_book_name, $param_author_name ,$param_branch , $param_sem, $param_price , $param_message);
+            mysqli_stmt_bind_param($stmt, "ssssssss",$param_id , $param_book_name, $param_author_name ,$param_branch , $param_sem, $param_price , $param_message , $param_image);
             
             // Set parameters
             $param_id = 1;
@@ -84,12 +86,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_sem = $sem;
             $param_price = $price;
             $param_message = $message;
+            $param_image = $imgContent;
+            unlink($destination_url);
             
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-                header("location: image.php");
+               // header("location: image.php");
+               echo "alert('ADD POSTED')";
+               
+               header("location: homepage.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -181,16 +188,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <textarea rows="10" cols="55" class="input100" class="form-control" name="message" placeholder="<?php echo $message; ?>please include a description"></textarea>
                 <span class="help-block"><?php echo $msg_err; ?></span>
             </div>    
+            
+        <form class="form-group " action="upload.php" method="post" enctype="multipart/form-data">
+            <label>Select image to upload:</label>
+            <input type="file" name="image"/><br><br>
+            <input type="submit" class="btn btn-primary" name="upload" value="SUBMIT"/>
+            <button onclick="location.href='homepage.php'" class="btn btn-default" type="button">
+            BACK
+            </button>
+            
+       
                                         
             
             
+     
+ 
+        </form> 
+         </form>
+        
             
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Next">
-                <input type="reset" class="btn btn-default" value="Reset">
-            </div>
             
-        </form>
     </div>    
 </body>
 </html>
