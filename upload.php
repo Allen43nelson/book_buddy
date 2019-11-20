@@ -1,25 +1,29 @@
 <?php
-session_start();
-if(isset($_POST["submit"])){
+    session_start();
+    require_once "config.php";
+   if(isset($_POST["submit"])){
     $check = getimagesize($_FILES["image"]["tmp_name"]);
     if($check !== false){
         $image = $_FILES['image']['tmp_name'];
-        //
-        //$imgContent = addslashes(file_get_contents($destination_url));
+       $result = $link->query("SELECT max(add_id) as add_id FROM book_details");
+        if($result->num_rows > 0){
+       
+       $imgData = $result->fetch_assoc();       
+       while ($imgData)
+       {
+           $add_id = $imgData['add_id']; 
+        //echo $imgData['add_id'];
+        $imgData = $result->fetch_assoc();      
+       }
+    }else{
+        echo 'AD id not found';
+    }
+        
+        $user_id=$_SESSION["id"];
+        $source_url =$image;
+        $destination_url='./photos/photo'.$add_id.'.jpeg'; 
+        $quality=25;
 
-        /*
-         * Insert image data into database
-         */
-        
-        echo 'heloooooooo';
-        sleep(5);
-         $source_url = $image;
-        $destination_url='photo'.$_SESSION["id"].'.jpeg'; 
-        $quality=10;
-        
-        
-        
-        
        $info = getimagesize($source_url);
 
         if ($info['mime'] == 'image/jpeg')
@@ -33,21 +37,27 @@ if(isset($_POST["submit"])){
 
         imagejpeg($image, $destination_url, $quality);
         
+      
         
         
-    //return $destination_url;
-        $imgContent = addslashes(file_get_contents($destination_url));
-        
-       
-        
-        if($imgContent){
+        $insert = $link->query("INSERT into images (add_id , user_id ,image) VALUES ('$add_id','$user_id', '$destination_url')");
+        if($insert){
             echo "File uploaded successfully.";
-            
+            header("location: homepage.php");
         }else{
+            echo '$add_id'.$add_id;
+            echo '$user_id'.$user_id;
+            echo '$image'.$destination_url;
             echo "File upload failed, please try again.";
         } 
     }else{
         echo "Please select an image file to upload.";
     }
 }
+    
+   
+    
+    
+    
+
 ?>

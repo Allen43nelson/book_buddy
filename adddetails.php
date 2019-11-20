@@ -1,4 +1,6 @@
+
 <?php
+error_reporting(0);
   session_start();
   require_once "config.php";
   if(empty($_GET['add_id']))
@@ -28,69 +30,20 @@
   }
   //$title = $row['book_title'];
   //require "./template/header.php";
-  require "./header_1.html";
+  
 ?>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>AD details</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">  
-       <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
         
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-                    <style>
-* {box-sizing: border-box;}
+     
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+       <style>
 
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-    div.gallery {
-      border: 1px solid #ccc;
-    }
+        
 
-    div.gallery:hover {
-      border: 1px solid #777;
-    }
-
-    div.gallery img {
-      width: 185px;
-      height: 185px;	
-    }
-
-    div.desc {
-      padding: 5px;
-      text-align: center;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    .responsive {
-      padding: 0 6px;
-      float: left;
-      width: 200px;
-    }
-* {
-              box-sizing: border-box;
-    }
-
-    /* Create two equal columns that floats next to each other */
-    .column {
-      float: left;
-      width: 25%;
-      padding: 10px;
-    }
-
-    /* Clear floats after the columns */
-    .row:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
-    /* Style the buttons */
         
 
 .topnav {
@@ -140,11 +93,12 @@ body {
     text-align: left;
     width: 100%;
     margin: 0;
-    padding: 14px;
+    padding: 5px;
   }
   
   .topnav input[type=text] , .topnav i{
-    border: 10px solid #ccc;  
+    border: 1px solid #ccc;  
+    
   }
   .topnav i{
       background-color: white
@@ -154,14 +108,21 @@ body {
 </style>
     </head>
     <body>
+        <?php
+        if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    include("header.html");
+    }
+    else {
+        include("header_1.html");
+    }?>
         <p class="lead" style="margin: 25px 0"><a href="homepage.php">HOME</a> > <?php echo $row['book_name']; ?></p>
       <div class="row">
         <div class="col-md-3 text-center">
-          <img class="img-responsive img-thumbnail" alt="not available" src="<?php echo $row['image'] ; ?>">
+          <img class="img-responsive img-thumbnail" alt="not available" src="./photos/photo<?php echo $row['add_id']; ?>.jpeg" style="width:250px;height:450px">
         </div>
         <div class="col-md-6">
           <h4>Book Description</h4>
-          <p><?php echo $row['message']; ?></p>
+          <p><h6></h6><?php echo $row['message']; ?></h6></p>
           <h4>Book Details</h4>
           <table class="table">
           	<?php foreach($row as $key => $value){
@@ -205,6 +166,7 @@ body {
           </form>
        	</div>
       </div>
+        
     </body>
 </html>
 

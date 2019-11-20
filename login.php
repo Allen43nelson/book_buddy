@@ -1,5 +1,5 @@
 <?php
-// Initialize the session
+error_reporting(0);
 session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
@@ -60,7 +60,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
-                            $_SESSION ["id"] = $id;
+                            $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;                            
                             
                             // Redirect user to welcome page
@@ -96,13 +96,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
+        .wrapper{ width: 350px;position: relative;left: 540px; top : 80px; padding: 20px; 
+                    float: center;}
+		div.a {
+                            
+				position: relative;top : 80px;
+                text-align: center;
+              }
+		 body {
+                background-color: #ede6f2;
+              }
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="a">
         <h2>Login</h2>
         <p>Please fill in your credentials to login.</p>
+		</div>
+		<div class="wrapper">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label>Username</label>

@@ -1,6 +1,13 @@
+
 <?php
 	session_start();
+       error_reporting(0); 
 	//require_once "admin.php";
+        //sset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
+        if(!isset($_SESSION["admin"]) && !$_SESSION["admin"] === true){
+        header("location: admin.php");
+        exit;
+        }
 
 	require_once "header.html";
 	require_once "config.php";

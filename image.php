@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+error_reporting(0);
+session_start();
+?>
 <html lang="en">
     <meta charset="UTF-8">
     <title>Sign Up</title>
@@ -19,7 +23,8 @@
     </style>
 <body>
     <form class="wrapper " action="upload.php" method="post" enctype="multipart/form-data">
-        <label>Select image to upload:</label>
+        <label>Select image to upload:
+       </label>
         <input type="file" name="image"/>
         <input type="submit" name="submit" value="UPLOAD"/>
     </form>

@@ -1,5 +1,5 @@
 <?php
-// Initialize the session
+error_reporting(0);
 session_start();?>
 <html>
         <head>
@@ -29,7 +29,7 @@ body {
 
     div.desc {
       padding: 5px;
-      text-align: center;
+      text-align: left;
     }
 
     * {
@@ -108,11 +108,12 @@ body {
     text-align: left;
     width: 100%;
     margin: 0;
-    padding: 14px;
+    padding: 5px;
   }
   
   .topnav input[type=text] , .topnav i{
-    border: 10px solid #ccc;  
+    border: 1px solid #ccc;  
+    
   }
   .topnav i{
       background-color: white
@@ -161,12 +162,13 @@ body {
                       }else {
                        $ct=($ct+1)%4;   
                     }
+                    
                     echo '<a target="_blank" href="adddetails.php?add_id='.$row['add_id'].'">';
-                    echo '<div class="column">';
+                    echo '<div class="column" >';
                     echo '<div class="responsive">';
                     echo '<a target="_blank" href="adddetails.php?add_id='.$row['add_id'].'">';
                     echo '<div class="gallery">';
-                    echo '<img src='. $row['image'].' alt="mechanics text" width="50" height="50">';
+                    echo '<img src="./photos/photo'. $row['add_id'].'.jpeg" alt="mechanics text" width="50" height="50" ><br>';
                     echo '<div class="desc">';                    
                     echo 'Book name: ' . $row['book_name'] . '<br>';         
                     echo 'Author\'s name: ' . $row['author_name'] . '<br>';        
@@ -191,5 +193,6 @@ body {
             ?>
         </body>
     </html>
+    <?php include("footer.php");?>
 
 
