@@ -10,6 +10,9 @@ if(isset($_POST["submit"])){
         /*
          * Insert image data into database
          */
+        
+        echo 'heloooooooo';
+        sleep(5);
          $source_url = $image;
         $destination_url='photo'.$_SESSION["id"].'.jpeg'; 
         $quality=10;

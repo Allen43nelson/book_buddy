@@ -2,6 +2,13 @@
   <a class="active" href="#home">Home</a>
   <a class="left" href="login.php">Login</a>
   <a class="left" href="register.php">Sign Up</a>
-  <input type="text" placeholder="Search..">
-  <i class="fa fa-search"></i>
+  <div class="search-container">
+  <form action="homepage.php" method="get">
+      <input type="text" placeholder="Search.." name="s_item" value="">
+  <input type="hidden" name="form_submitted" value="1" />
+  <button type="submit" value="Submit">
+      <i class="fa fa-search"></i>
+  </button>
+   </form>
+  </div>  
 </div>

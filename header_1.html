@@ -1,7 +1,18 @@
 <div class="topnav">
   <a class="active" href="#home">Home</a>
+  <a class="left" href="logout.php">Sign Out</a>
   <a class="left" href="my_account">My Account</a>
   <a class="left" href="bookdetails.php">Post Add</a>
-  <input type="text" placeholder="Search..">
-  <i class="fa fa-search"></i>
+  <div class="search-container">
+  <form action="homepage.php" method="get">
+      <input type="text" placeholder="Search.." name="s_item" value="">
+  <input type="hidden" name="form_submitted" value="1" />
+  <button type="submit" value="Submit">
+      <i class="fa fa-search"></i>
+  </button>
+   </form>
+  </div>   
+  
+ 
 </div>
+

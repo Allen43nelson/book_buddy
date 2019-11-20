@@ -3,7 +3,8 @@
 
 <?php
 // Include config file
-if(0){
+session_start();
+if(!(isset($_SESSION["loggedin"])) && !($_SESSION["loggedin"] === true)){
     header("location: login.php");
     exit;
 }
@@ -11,7 +12,7 @@ else{
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$book_name = $branch = $price = $author_name = $message = $sem = "";
+$book_name = $branch = $price = $author_name = $message = $sem = $check = "";
 $book_name_err = $branch_name_err = $price_err = $msg_err = $author_name_err = $sem_err = "";
  
 // Processing form data when form is submitted
@@ -63,11 +64,54 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $message = trim($_POST["message"]);
     }    
     
-    
-    
-    
-    
-    if(empty($book_name_err) && empty($price_err) && empty($branch_name_err) && empty($sem_err) && empty($author_name_err) && empty($msg_err) ){
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+    if(1){
+        $image = $_FILES['image']['tmp_name'];
+        //
+        //$imgContent = addslashes(file_get_contents($destination_url));
+
+        /*
+         * Insert image data into database
+         */
+        
+        echo 'heloooooooo';
+        sleep(5);
+         $source_url = $image;
+        $destination_url='photo'.$_SESSION["id"].'.jpeg'; 
+        $quality=10;
+        
+        
+        
+        
+       $info = getimagesize($source_url);
+
+        if ($info['mime'] == 'image/jpeg')
+              $image = imagecreatefromjpeg($source_url);
+
+        elseif ($info['mime'] == 'image/gif')
+              $image = imagecreatefromgif($source_url);
+
+      elseif ($info['mime'] == 'image/png')
+              $image = imagecreatefrompng($source_url);
+
+        imagejpeg($image, $destination_url, $quality);
+        
+        
+        
+    //return $destination_url;
+        $imgContent = addslashes(file_get_contents($destination_url));
+        
+       
+        
+        if($imgContent){
+            echo "File uploaded successfully.";
+            
+        }else{
+            echo "File upload failed, please try again.";
+        } 
+    }
+   
+        if(empty($book_name_err) && empty($price_err) && empty($branch_name_err) && empty($sem_err) && empty($author_name_err) && empty($msg_err) ){
         
         // Prepare an insert statement
         $destination_url = 'photo'.$_SESSION["id"].'.jpeg'; 
@@ -79,7 +123,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_bind_param($stmt, "ssssssss",$param_id , $param_book_name, $param_author_name ,$param_branch , $param_sem, $param_price , $param_message , $param_image);
             
             // Set parameters
-            $param_id = 1;
+            $param_id = $_SESSION ["id"];
             $param_book_name = $book_name;
             $param_author_name = $author_name;
             $param_branch =  $branch;
@@ -87,7 +131,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_price = $price;
             $param_message = $message;
             $param_image = $imgContent;
-            unlink($destination_url);
+           // unlink($destination_url);
             
             
             // Attempt to execute the prepared statement
@@ -95,7 +139,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Redirect to login page
                // header("location: image.php");
                echo "alert('ADD POSTED')";
-               
+               sleep(2);
                header("location: homepage.php");
             } else{
                 echo "Something went wrong. Please try again later.";
@@ -189,13 +233,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <span class="help-block"><?php echo $msg_err; ?></span>
             </div>    
             
-        <form class="form-group " action="upload.php" method="post" enctype="multipart/form-data">
+            <div class="form-group ">
             <label>Select image to upload:</label>
             <input type="file" name="image"/><br><br>
+            
+            </div>
+            
+            
             <input type="submit" class="btn btn-primary" name="upload" value="SUBMIT"/>
             <button onclick="location.href='homepage.php'" class="btn btn-default" type="button">
             BACK
             </button>
+            <?php 
+            echo $check; 
+            sleep(3);
+            ?>
+            
             
        
                                         
@@ -203,7 +256,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
      
  
-        </form> 
+         
          </form>
         
             

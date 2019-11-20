@@ -14,24 +14,51 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
+    div.gallery {
+      border: 1px solid #ccc;
+    }
+
+    div.gallery:hover {
+      border: 1px solid #777;
+    }
+
+    div.gallery img {
+      width: 185px;
+      height: 185px;	
+    }
+
+    div.desc {
+      padding: 5px;
+      text-align: center;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .responsive {
+      padding: 0 6px;
+      float: left;
+      width: 200px;
+    }
 * {
               box-sizing: border-box;
-            }
+    }
 
-            /* Create two equal columns that floats next to each other */
-            .column {
-              float: left;
-              width: 25%;
-              padding: 10px;
-            }
+    /* Create two equal columns that floats next to each other */
+    .column {
+      float: left;
+      width: 25%;
+      padding: 10px;
+    }
 
-            /* Clear floats after the columns */
-            .row:after {
-              content: "";
-              display: table;
-              clear: both;
-            }
-            /* Style the buttons */
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    /* Style the buttons */
         
 
 .topnav {
@@ -109,9 +136,16 @@ body {
           
             require_once "config.php";
             
+            
+            if (isset($_GET['form_submitted'])&&!empty($_GET['s_item'])){
+                
+                $query = "SELECT * FROM book_details where book_name LIKE '". $_GET['s_item']."'"; 
+            }
+            else{
+            
             $query = "SELECT * FROM book_details"; 
         //SQL select query 
-
+            }
             $result = mysqli_query($link, $query) 
                     or die('Error querying database.');
 
@@ -127,14 +161,22 @@ body {
                       }else {
                        $ct=($ct+1)%4;   
                     }
-
+                    echo '<a target="_blank" href="adddetails.php?add_id='.$row['add_id'].'">';
                     echo '<div class="column">';
+                    echo '<div class="responsive">';
+                    echo '<a target="_blank" href="adddetails.php?add_id='.$row['add_id'].'">';
+                    echo '<div class="gallery">';
+                    echo '<img src='. $row['image'].' alt="mechanics text" width="50" height="50">';
+                    echo '<div class="desc">';                    
                     echo 'Book name: ' . $row['book_name'] . '<br>';         
                     echo 'Author\'s name: ' . $row['author_name'] . '<br>';        
                     echo 'Price: ' . $row['price'] . '<br>';         
                     echo 'Branch: ' . $row['branch'] . '<br>';         
-                    echo 'semester: ' . $row['semester'] . '<br><br>';         
-
+                    echo 'semester: ' . $row['semester'] . '<br><br>'; 
+                    echo '</a>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
                     echo '</div>';
 
             } 
